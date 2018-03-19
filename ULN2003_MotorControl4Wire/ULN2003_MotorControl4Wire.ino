@@ -10,7 +10,9 @@ int count       = 0;      // count of steps made
 int revolution  = 100;    // counts to trigger change in direction
 
 //int lookup[8] = {B01000, B01100, B00100, B00110, B00010, B00011, B00001, B01001};
-int lookup[8] = {B01010, B01001, B00101, B00110};
+int lookup[8] = {
+  B01010, B01001, B00101, B00110
+};
 
 void setup() {
   //declare the motor pins as outputs
@@ -35,30 +37,24 @@ void loop() {
   count++;
 }
 
+void counterclockwise() {
+  for (int i = 0; i < 4; i++) {
+    setOutput(i);
+  }
+}
+
+void clockwise() {
+  for (int i = 4; i > 0; i--) {
+    setOutput(i);
+  }
+}
+
 //set pins to ULN2003 high in sequence from 1 to 4
 //delay "speed" between each pin setting (to determine speed)
-void counterclockwise()
-{
-  for (int i = 0; i < 4; i++)
-  {
-    setOutput(i);
-    delayMicroseconds(speed);
-  }
-}
-
-void clockwise()
-{
-  for (int i = 4; i > 0; i--)
-  {
-    setOutput(i);
-    delayMicroseconds(speed);
-  }
-}
-
-void setOutput(int index)
-{
+void setOutput(int index) {
   digitalWrite(motorPin1, bitRead(lookup[index], 0));
   digitalWrite(motorPin2, bitRead(lookup[index], 1));
   digitalWrite(motorPin3, bitRead(lookup[index], 2));
   digitalWrite(motorPin4, bitRead(lookup[index], 3));
+  delayMicroseconds(speed);
 }
